@@ -15,14 +15,18 @@ struct WeatherSearchView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     var body: some View {
-        Group {
-            if horizontalSizeClass == .compact {
-                portraitLayout
-            } else {
-                landscapeLayout
+        GeometryReader { geo in
+            Group {
+                if horizontalSizeClass == .regular {
+                    portraitLayout
+                } else if geo.size.width > geo.size.height {
+                    landscapeLayout
+                } else {
+                    portraitLayout
+                }
             }
+            .padding()
         }
-        .padding()
     }
     
     private var portraitLayout: some View {
