@@ -26,21 +26,12 @@ public actor URLSessionHTTPClient: HTTPClient {
         components.path = endpoint.path
         components.queryItems = endpoint.queryItems
         
-//        guard let url = URL(string: endpoint.path) else {
-//            throw HttpError.invalidURL
-//        }
-        
         guard let url = components.url else {
             throw HttpError.invalidURL
         }
         
         var urlRequest = URLRequest(url: url)
         var httpMethod = endpoint.method.rawValue
-        
-//        if let parameters = endpoint.parameters {
-//            let data = try JSONSerialization.data(withJSONObject: parameters)
-//            urlRequest.httpBody = data
-//        }
         
         urlRequest.httpMethod = httpMethod
         urlRequest.httpBody = endpoint.body
