@@ -10,13 +10,9 @@ import Utilities
 
 struct RemoteImageView: View {
 
-    @ObservedObject private var loader: ImageLoader
     let url: URL?
 
-    init(url: URL?) {
-        self.url = url
-        self.loader = ImageLoader()
-    }
+    @StateObject private var loader = ImageLoader()
 
     var body: some View {
         ZStack {
@@ -25,18 +21,17 @@ struct RemoteImageView: View {
                     .resizable()
                     .scaledToFit()
             } else {
-                
                 Color.clear
             }
         }
         .frame(width: 80, height: 80)
-        .onAppear {
-            print("RemoteImageView appeared")
-            if let url {
-                loader.load(from: url)
-            } else {
+        .task(id: url) {
+            guard let url else {
                 print("Icon URL is nil")
+                return
             }
+            loader.load(from: url)
         }
     }
 }
+

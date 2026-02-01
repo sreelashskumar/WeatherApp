@@ -68,7 +68,7 @@ final class WeatherSearchViewModel: ObservableObject {
                     responseType: WeatherModel.self
                 )
                 
-                print("API Success.", response)
+                print("City API Success.", response)
 
                 self.weather = response
                 self.storage.save(city: self.city)
@@ -83,6 +83,8 @@ final class WeatherSearchViewModel: ObservableObject {
     }
     
     private func fetchByLocation(lat: Double, lon: Double) {
+        isLoading = true
+        
         Task {
             do {
                 let endpoint = WeatherEndpoint.coordinate(
@@ -95,8 +97,12 @@ final class WeatherSearchViewModel: ObservableObject {
                     endpoint: endpoint,
                     responseType: WeatherModel.self
                 )
+                
+                print("Location API Success.", response)
 
                 self.weather = response
+                self.storage.save(city: response.name)
+                self.isLoading = false
             } catch {
                 self.errorMessage = error.localizedDescription
             }

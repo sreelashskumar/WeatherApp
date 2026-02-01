@@ -67,7 +67,7 @@ struct WeatherSearchView: View {
     private var resultSection: some View {
         Group {
             if viewModel.isLoading {
-//                ProgressView()
+                ProgressView()
             }
 
             if let error = viewModel.errorMessage {

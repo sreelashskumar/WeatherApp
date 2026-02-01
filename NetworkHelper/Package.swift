@@ -4,31 +4,21 @@
 import PackageDescription
 
 let package = Package(
-    name: "WeatherFeature",
-    platforms: [
-        .iOS(.v17)
-    ],
+    name: "NetworkHelper",
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "WeatherFeature",
-            targets: ["WeatherFeature"]),
-    ],
-    dependencies: [
-        .package(path: "../Utilities")
+            name: "NetworkHelper",
+            targets: ["NetworkHelper"]),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "WeatherFeature",
-            dependencies: [
-                .product(name: "Utilities", package: "Utilities")
-            ]
-        ),
+            name: "NetworkHelper"),
         .testTarget(
-            name: "WeatherFeatureTests",
-            dependencies: ["WeatherFeature"]
+            name: "NetworkHelperTests",
+            dependencies: ["NetworkHelper"]
         ),
     ]
 )

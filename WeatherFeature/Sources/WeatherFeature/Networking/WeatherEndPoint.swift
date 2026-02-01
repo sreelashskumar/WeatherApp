@@ -31,6 +31,7 @@ extension WeatherEndpoint: APIEndpoint {
             return [
                 URLQueryItem(name: "lat", value: "\(lat)"),
                 URLQueryItem(name: "lon", value: "\(lon)"),
+                URLQueryItem(name: "units", value: "imperial"),
                 URLQueryItem(name: "appid", value: apiKey)
             ]
         }

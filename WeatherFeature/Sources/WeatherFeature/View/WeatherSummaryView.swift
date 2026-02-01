@@ -25,8 +25,9 @@ struct WeatherSummaryView: View {
             Text(weather.weather.first?.description.capitalized ?? "")
                 .foregroundColor(.secondary)
 
+//            AsyncImage(url: iconURL)
+//                .frame(width: 80, height: 80)
             RemoteImageView(url: iconURL)
-                .id(iconURL)
                 .frame(width: 80, height: 80)
 
             Button("View Details") {
@@ -35,7 +36,7 @@ struct WeatherSummaryView: View {
             .padding(.top, 8)
         }
         .padding()
-        .background(Color(.secondarySystemBackground))
+        .background(Color(.gray).opacity(0.05))
         .cornerRadius(12)
     }
     

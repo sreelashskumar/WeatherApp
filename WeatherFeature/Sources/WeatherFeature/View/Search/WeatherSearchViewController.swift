@@ -52,4 +52,3 @@ final class WeatherSearchViewController: UIViewController {
         hosting.didMove(toParent: self)
     }
 }
-

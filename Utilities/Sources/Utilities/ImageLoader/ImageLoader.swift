@@ -19,37 +19,30 @@ public final class ImageLoader: ObservableObject {
         let nsURL = url as NSURL
         print("Start loading image:", url)
 
+        image = nil 
+
         Task {
             if let cached = await ImageCache.shared.image(for: nsURL) {
                 print("Loaded image from cache")
                 self.image = cached
                 return
             }
-        }
 
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            if let error {
-                print("Image download error:", error)
-                return
-            }
+            do {
+                let (data, _) = try await URLSession.shared.data(from: url)
+                guard let image = UIImage(data: data) else {
+                    print("Failed to decode UIImage")
+                    return
+                }
 
-            guard
-                let data,
-                let image = UIImage(data: data)
-            else {
-                print("Failed to decode UIImage")
-                return
-            }
-
-            Task {
                 await ImageCache.shared.insert(image, for: nsURL)
-            }
-
-            DispatchQueue.main.async {
-                print("Image loaded successfully")
                 self.image = image
+                print("Image loaded successfully")
+
+            } catch {
+                print("Image download error:", error)
             }
         }
-        .resume()
     }
 }
+
